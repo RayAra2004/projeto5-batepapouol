@@ -25,4 +25,22 @@ function rederizaMesangens(msgs){
     });
 }
 
-setInterval(capturaMensagens, 3000);
+function userAtivo(nome){
+    axios.post('https://mock-api.driven.com.br/api/vm/uol/status', {name: nome});
+}
+
+function entrarSala(){
+    let nome = prompt("Informe seu nome:");
+
+    const promisse = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants', {name: nome});
+    promisse.then(function(){
+        setInterval(capturaMensagens, 3000);
+        setInterval(function(){
+            userAtivo(nome)
+        }, 5000);
+    });
+    promisse.catch(entrarSala);
+}
+
+entrarSala();
+//setInterval(capturaMensagens, 3000);

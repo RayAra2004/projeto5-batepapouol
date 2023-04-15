@@ -29,8 +29,10 @@
     </ul>
 
     <div class="footer">
-        <input type="text" placeholder="Escreva aqui...">
-        <ion-icon name="paper-plane-outline"></ion-icon>
+        <input type="text" placeholder="Escreva aqui..." data-test="input-message">
+        <button onclick="enviarMensagem()" data-test="send-message">
+            <ion-icon name="paper-plane-outline" ></ion-icon>
+        </button>
     </div>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

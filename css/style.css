@@ -112,10 +112,15 @@ li{
     outline: 0;
 }
 
-.footer ion-icon{
+.footer button{
     position: absolute;
     top: 27px;
     right: 20px;
+    background: none;
+    border: none;
+}
+
+.footer button ion-icon{
     height: 26px;
     width: 26px;
 }

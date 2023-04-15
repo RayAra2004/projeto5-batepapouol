@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
+
+*{
+    box-sizing: border-box;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+body{
+    background-color: #E5E5E5;
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 80px;
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.header img{
+    position: absolute;
+    top: 22px;
+    left: 16px;
+
+}
+
+.header ion-icon{
+    position: absolute;
+    top: 25px;
+    right: 24px;
+    height: 43px;
+    width: 31px;
+}
+
+ul{
+    margin-top: 106px;
+}
+
+li{
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    margin-bottom: 4px;
+}
+
+.entrar{
+    background-color: #DCDCDC;
+}
+
+.msg_all{
+    background-color: #FFFFFF;
+}
+
+.msg_private{
+    background-color: #FFDEDE;
+}
+
+.hora{
+    margin-left: 10px;
+    color: #AAAAAA;
+}
+
+.msg{
+    margin-left: 10px;
+}
+
+.user{
+    font-weight: bold;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 80px;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.footer input{
+    border: none;
+    border-width: 0px;
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    height: 30px;
+    width: 300px;
+    position: absolute;
+    left: 17px;
+    top: 25px;
+}
+
+.footer input::placeholder{
+    color: #000000;
+}
+
+.footer input:focus{
+    box-shadow:  0 0 0 0;
+    outline: 0;
+}
+
+.footer ion-icon{
+    position: absolute;
+    top: 27px;
+    right: 20px;
+    height: 26px;
+    width: 26px;
+}

@@ -14,16 +14,6 @@ function rederizaMesangens(msgs){
     const mensagens = msgs.data;
     const ul = document.querySelector('ul');
     ul.innerHTML = '';
-    /*
-    mensagens.forEach(mensagem => {
-        ul.innerHTML += `
-        <li class="msg_all" data-test="message">   
-            <p class="hora">${mensagem.time}</p><p class="msg"> 
-            <span class="user">${mensagem.from}</span> para <span class="user">${mensagem.to}:
-            </span> ${mensagem.text}</p>
-        </li>
-        `
-    });*/
     mensagens.forEach(mensagem => {
         ul.innerHTML += `
         <li class="msg_all" data-test="message">   
@@ -88,3 +78,90 @@ function teste(event){
         enviarMensagem();
     }
 }
+
+function participantes(){
+    const tamanhoTela = window.screen.width;
+    const area_preta = document.querySelector('.area_preta');
+    area_preta.style.width = `${tamanhoTela - 259}px`;
+    const divParticipantes = document.querySelector('.div_participantes');
+    divParticipantes.style.display = 'block';
+
+    const divMensagens = document.querySelector('.tela_mensagens');
+    divMensagens.classList.add('transparencia');
+}
+
+function ocultaParticipantes(){
+    const divParticipantes = document.querySelector('.div_participantes');
+    divParticipantes.style.display = 'none';
+}
+
+function buscaParticipantes(){
+    const promisse = axios.get('https://mock-api.driven.com.br/api/vm/uol/participants');
+    promisse.then(redenrizarParticipantes);
+}
+
+function redenrizarParticipantes(res){
+    const ul = document.querySelector('.pessoinhas ul');
+    ul.innerHTML = '';
+    ul.innerHTML = `
+        <li onclick="pessoaEscolhida(this)">
+            <ion-icon name="people"></ion-icon>
+            <p>Todos</p>
+            <ion-icon name="checkmark-outline" class="check escondido"></ion-icon>
+        </li>`
+    res.data.forEach(function(participante){
+        ul.innerHTML += `
+            <li onclick="pessoaEscolhida(this)">
+                <ion-icon name="people-circle-outline" class="person"></ion-icon>
+                <p>${participante.name}</p>
+                <ion-icon name="checkmark-outline" class="check escondido"></ion-icon>
+            </li>
+        `
+    });   
+}
+
+let enviarPara ='', modoEnvio = '';
+
+function pessoaEscolhida(pessoa){
+    enviarPara = pessoa.querySelector('p').innerHTML;
+
+    const texto = `Enviando para ${enviarPara}(${modoEnvio.toLowerCase()})`;
+    document.querySelector('.textoMsg').innerHTML = texto;
+    
+    const pessoaSelecionada = document.querySelector('.pessoinhas ul').querySelector('.selecionado');
+    if(pessoaSelecionada == null){
+        pessoa.classList.add('selecionado');
+        const check = pessoa.querySelector('.check');
+        check.classList.remove('escondido');
+    } else{
+        pessoaSelecionada.classList.remove('selecionado');
+        const check = pessoaSelecionada.querySelector('.check');
+        check.classList.add('escondido');
+        pessoa.classList.add('selecionado');
+        const check2 = pessoa.querySelector('.check');
+        check2.classList.remove('escondido');
+    }
+}
+
+function modoMensagem(cadeado){
+    modoEnvio = cadeado.querySelector('p').innerHTML;
+
+    const texto = `Enviando para ${enviarPara}(${modoEnvio.toLowerCase()})`;
+    document.querySelector('.textoMsg').innerHTML = texto;
+    const cadSelecionado = document.querySelector('.visibilidade .selecionado');
+    if(cadSelecionado == null){
+        const check = cadeado.querySelector('.check');
+        check.classList.remove('escondido');
+        cadeado.classList.add('selecionado');
+    }else{
+        const check = cadSelecionado.querySelector('.check');
+        check.classList.add('escondido');
+        cadSelecionado.classList.remove('selecionado');
+        const check2 = cadeado.querySelector('.check');
+        check2.classList.remove('escondido');
+        cadeado.classList.add('selecionado');
+    }
+}
+
+buscaParticipantes();
+setInterval(buscaParticipantes, 10000);

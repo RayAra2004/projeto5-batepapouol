@@ -22,7 +22,7 @@
     <div class="tela_mensagens">
         <div class="header">
             <img src="./imgs/logo.svg" alt="">
-            <ion-icon name="people"></ion-icon>
+            <ion-icon name="people" onclick="participantes()"></ion-icon>
         </div>
 
         <ul>
@@ -44,8 +44,42 @@
             <button onclick="enviarMensagem()" data-test="send-message">
                 <ion-icon name="paper-plane-outline" ></ion-icon>
             </button>
+            <p class="textoMsg"></p>
         </div>
-    </div>
+    </div> 
+    <div class="div_participantes" >
+        <div class="area_preta" onclick="ocultaParticipantes()"></div>
+        <div class="participantes">
+            <div class="participantes_ativos">
+                <p>Escolha um contato <br> para enviar mensagem:</p>
+                <div class="pessoinhas">
+                    <ul>
+                        <li>
+                            <ion-icon name="people"></ion-icon>
+                            <p>Todos</p>
+                        </li>
+                        <li>
+                            <ion-icon name="people-circle-outline"></ion-icon>
+                            <p>Testezinho</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="visibilidade">
+                <p>Escolha a visibilidade:</p>
+                <div class="cadeado_aberto" onclick="modoMensagem(this)">
+                    <img src="./imgs/cadeado_aberto.svg" alt="">
+                    <p>Público</p>
+                    <ion-icon name="checkmark-outline" class="check escondido"></ion-icon>
+                </div>
+                <div class="cadeado_fechado" onclick="modoMensagem(this)">
+                    <img src="./imgs/cadeado_fechado.svg" alt="">
+                    <p>Reservadamente</p>
+                    <ion-icon name="checkmark-outline" class="check escondido"></ion-icon>
+                </div>
+            </div>
+        </div>
+    </div>  
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

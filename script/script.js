@@ -1,6 +1,7 @@
 axios.defaults.headers.common['Authorization'] = "pYMibMjkB0MmSoYOvynCYRRB";
 
-let nome;
+let enviarPara ='Todos', modoEnvio = 'Público', to = 'Todos', type = 'message', nome;
+
 function capturaMensagens(){
     const resposta = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
     resposta.then(rederizaMesangens);
@@ -15,12 +16,37 @@ function rederizaMesangens(msgs){
     const ul = document.querySelector('ul');
     ul.innerHTML = '';
     mensagens.forEach(mensagem => {
-        ul.innerHTML += `
-        <li class="msg_all" data-test="message">   
-            <p class="hora">(${mensagem.time})</p><p class="msg"> <span class="user">${mensagem.from}</span> para <span class="user">${mensagem.to}:</span>  ${mensagem.text}</p>
-        </li>
-        `
+        if(mensagem.type === 'message' || mensagem.to === 'Todos' || mensagem.type === 'status'){
+            if(mensagem.type === 'status'){
+                ul.innerHTML += `
+                <li class="entrar" data-test="message">
+                    <p class="hora">(${mensagem.time})</p><p class="msg"><span class="user">${mensagem.from}</span> ${mensagem.text} </p>
+                </li>
+                `
+            }else if(mensagem.type === 'message'){
+                ul.innerHTML += `
+                <li class="msg_all" data-test="message">   
+                    <p class="hora">(${mensagem.time})</p><p class="msg"> <span class="user">${mensagem.from}</span> para <span class="user">${mensagem.to}:</span>  ${mensagem.text}</p>
+                </li>
+                `
+            } else if(mensagem.type === 'private_message' && mensagem.to === 'Todos'){
+                ul.innerHTML += `
+                <li class="msg_private" data-test="message">   
+                    <p class="hora">(${mensagem.time})</p><p class="msg"> <span class="user">${mensagem.from}</span> reservadamente para  <span class="user">${mensagem.to}:</span>  ${mensagem.text}</p>
+                </li>
+                `
+            }
+        } else if(mensagem.to === nome || mensagem.from === nome || mensagem.to === 'Todos'){
+            ul.innerHTML += `
+            <li class="msg_private" data-test="message">   
+                <p class="hora">(${mensagem.time})</p><p class="msg"> <span class="user">${mensagem.from}</span> reservadamente para  <span class="user">${mensagem.to}:</span>  ${mensagem.text}</p>
+            </li>
+            `
+        }
     });
+
+    const ultimaMensagem = ul.lastElementChild;
+    ultimaMensagem.scrollIntoView();
 }
 
 function userAtivo(){
@@ -55,9 +81,9 @@ function enviarMensagem(){
     const request =
         {
             from: nome,
-            to: "Todos",
+            to: to,
             text: textoDigitado,
-            type: "message"
+            type: type
         };
 
     const promisse = axios.post("https://mock-api.driven.com.br/api/vm/uol/messages", request);
@@ -72,7 +98,7 @@ function enviarMensagem(){
 }
 
 
-function teste(event){
+function teste(event){ //TODO: Mudar nome da função
     var x = event.keyCode; // Obtém o valor Unicode (decimal)
     if(x === 13){
         enviarMensagem();
@@ -104,30 +130,29 @@ function redenrizarParticipantes(res){
     const ul = document.querySelector('.pessoinhas ul');
     ul.innerHTML = '';
     ul.innerHTML = `
-        <li onclick="pessoaEscolhida(this)">
+        <li onclick="pessoaEscolhida(this)" data-test="all">
             <ion-icon name="people"></ion-icon>
             <p>Todos</p>
-            <ion-icon name="checkmark-outline" class="check escondido"></ion-icon>
+            <ion-icon name="checkmark-outline" class="check escondido" data-test="check"></ion-icon>
         </li>`
     res.data.forEach(function(participante){
         ul.innerHTML += `
-            <li onclick="pessoaEscolhida(this)">
+            <li onclick="pessoaEscolhida(this)" data-test="participant">
                 <ion-icon name="people-circle-outline" class="person"></ion-icon>
                 <p>${participante.name}</p>
-                <ion-icon name="checkmark-outline" class="check escondido"></ion-icon>
+                <ion-icon name="checkmark-outline" class="check escondido" data-test="check"></ion-icon>
             </li>
         `
-    });   
+    });   //TODO: v´deo
 }
-
-let enviarPara ='', modoEnvio = '';
 
 function pessoaEscolhida(pessoa){
     enviarPara = pessoa.querySelector('p').innerHTML;
+    to = enviarPara;
 
-    const texto = `Enviando para ${enviarPara}(${modoEnvio.toLowerCase()})`;
+    const texto = `Enviando para ${enviarPara} (${modoEnvio.toLowerCase()})`;
     document.querySelector('.textoMsg').innerHTML = texto;
-    
+
     const pessoaSelecionada = document.querySelector('.pessoinhas ul').querySelector('.selecionado');
     if(pessoaSelecionada == null){
         pessoa.classList.add('selecionado');
@@ -146,7 +171,11 @@ function pessoaEscolhida(pessoa){
 function modoMensagem(cadeado){
     modoEnvio = cadeado.querySelector('p').innerHTML;
 
-    const texto = `Enviando para ${enviarPara}(${modoEnvio.toLowerCase()})`;
+    if(modoEnvio !== 'Público'){
+        type = "private_message";
+    }
+
+    const texto = `Enviando para ${enviarPara} (${modoEnvio.toLowerCase()})`;
     document.querySelector('.textoMsg').innerHTML = texto;
     const cadSelecionado = document.querySelector('.visibilidade .selecionado');
     if(cadSelecionado == null){

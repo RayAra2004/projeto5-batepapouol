@@ -22,60 +22,39 @@
     <div class="tela_mensagens">
         <div class="header">
             <img src="./imgs/logo.svg" alt="">
-            <ion-icon name="people" onclick="participantes()"></ion-icon>
+            <ion-icon name="people" onclick="participantes()" data-test="open-participants"></ion-icon>
         </div>
 
-        <ul>
-            <!--
-            <li class="entrar">
-                <p class="hora">(10:54:09)</p><p class="msg"><span class="user">João</span> entra na sala...</p>
-            </li>
-            <li class="msg_all">   
-                <p class="hora">(10:54:09)</p><p class="msg"> <span class="user">João</span> para <span class="user">Todos:</span>  Bom dia</p>
-            </li>
-            <li class="msg_private">
-                <p class="hora">(10:54:09)</p><p class="msg"> <span class="user">João</span>  reservadamente para <span class="user">Maria</span>: Oi gatinha quer tc?</p>
-            </li>
-            -->
-        </ul>
+        <ul></ul>   
 
         <div class="footer">
             <input type="text" placeholder="Escreva aqui..." onkeypress="teste(event)" data-test="input-message">
             <button onclick="enviarMensagem()" data-test="send-message">
                 <ion-icon name="paper-plane-outline" ></ion-icon>
             </button>
-            <p class="textoMsg"></p>
+            <p class="textoMsg" data-test="recipient"></p>
         </div>
     </div> 
     <div class="div_participantes" >
-        <div class="area_preta" onclick="ocultaParticipantes()"></div>
+        <div class="area_preta" onclick="ocultaParticipantes()" data-test="overlay"></div>
         <div class="participantes">
             <div class="participantes_ativos">
                 <p>Escolha um contato <br> para enviar mensagem:</p>
                 <div class="pessoinhas">
-                    <ul>
-                        <li>
-                            <ion-icon name="people"></ion-icon>
-                            <p>Todos</p>
-                        </li>
-                        <li>
-                            <ion-icon name="people-circle-outline"></ion-icon>
-                            <p>Testezinho</p>
-                        </li>
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
             <div class="visibilidade">
                 <p>Escolha a visibilidade:</p>
-                <div class="cadeado_aberto" onclick="modoMensagem(this)">
+                <div class="cadeado_aberto" onclick="modoMensagem(this)" data-test="public">
                     <img src="./imgs/cadeado_aberto.svg" alt="">
                     <p>Público</p>
-                    <ion-icon name="checkmark-outline" class="check escondido"></ion-icon>
+                    <ion-icon name="checkmark-outline" class="check escondido" data-test="check"></ion-icon>
                 </div>
-                <div class="cadeado_fechado" onclick="modoMensagem(this)">
+                <div class="cadeado_fechado" onclick="modoMensagem(this)" data-test="private">
                     <img src="./imgs/cadeado_fechado.svg" alt="">
                     <p>Reservadamente</p>
-                    <ion-icon name="checkmark-outline" class="check escondido"></ion-icon>
+                    <ion-icon name="checkmark-outline" class="check escondido" data-test="check"></ion-icon>
                 </div>
             </div>
         </div>
